@@ -2,6 +2,10 @@
 
 A Python client for uploading to [linx.li](https://linx.li).
 
+## Installation
+1. `git clone https://github.com/mutantmonkey/linxpy.git`
+2. `python setup.py install`
+
 ## Usage
 
 ### Uploading Files

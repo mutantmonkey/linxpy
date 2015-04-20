@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 ###############################################################################
-# linx - python uploader for linx.li
+# linxpy - python uploader for linx.li
 #
 # author: mutantmonkey <mutantmonkey@mutantmonkey.in>
 ###############################################################################
@@ -16,11 +16,12 @@ import urllib.parse
 logpath = os.path.expanduser('~/.local/share/linx.log')
 command = os.path.basename(sys.argv[0])
 
-user_agent = "pylinx/20130616"
+__version__ = "1.0"
+user_agent = "linxpy/{}".format(__version__)
 upload_path = 'https://linx.li/upload/public/'
 
 
-def stream_upload(f, total, label="", chunk_size=64*1024):
+def stream_upload(f, total, label="", chunk_size=64*1024, hide_progress=False):
     while True:
         data = f.read(chunk_size)
         if not data:
@@ -31,13 +32,15 @@ def stream_upload(f, total, label="", chunk_size=64*1024):
             break
 
         yield data
-        sys.stdout.write("\r{label:40} {progress:7.2%}".format(
-            label=label[-40:],
-            progress=f.tell() / total))
-        sys.stdout.flush()
+
+        if not hide_progress:
+            sys.stdout.write("\r{label:40} {progress:7.2%}".format(
+                label=label[-40:],
+                progress=f.tell() / total))
+            sys.stdout.flush()
 
 
-if command == 'unlinx':
+def unlinx():
     parser = argparse.ArgumentParser(
         description="Remove files that are in the log from linx.li.")
     parser.add_argument('urls', nargs='+', metavar='url')
@@ -51,7 +54,7 @@ if command == 'unlinx':
 
     for url in args.urls:
         filename = os.path.basename(url)
-        if not filename in delete_keys:
+        if filename not in delete_keys:
             raise Exception("File does not exist in log.")
 
         r = requests.delete(
@@ -70,16 +73,18 @@ if command == 'unlinx':
             print("{filename}:{errormsg}".format(
                 filename=filename,
                 errormsg=r.status_code))
-else:
+
+
+def linx():
     logfile = open(logpath, 'a')
 
     parser = argparse.ArgumentParser(description="Upload files to linx.li.")
     parser.add_argument(
-        '-e',
-        '--expires',
-        type=int,
-        default=0,
+        '-e', '--expires', type=int, default=0,
         help="The relative expiration time (in seconds) of the file.")
+    parser.add_argument(
+        '-s', '--no-progress', action='store_true',
+        help="Do not show upload progress.")
     parser.add_argument('files', nargs='*', metavar='file')
     args = parser.parse_args()
 
@@ -99,7 +104,9 @@ else:
                             'X-Randomized-Barename': True,
                             'User-Agent': user_agent,
                         },
-                        data=stream_upload(f, total, label=basename))
+                        data=stream_upload(
+                            f, total, label=basename,
+                            hide_progress=args.no_progress))
                 except KeyboardInterrupt:
                     raise SystemExit
 
