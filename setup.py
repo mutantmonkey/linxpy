@@ -11,7 +11,7 @@ setup(
             "unlinx = linx:unlinx",
         ],
     },
-    install_requires=["argparse", "requests>=2.4"],
+    install_requires=["requests>=2.4"],
     description="A Python client for linx.li.",
     license="WTFPL",
     author="mutantmonkey",
