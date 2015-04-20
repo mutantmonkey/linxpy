@@ -16,7 +16,7 @@ import urllib.parse
 logpath = os.path.expanduser('~/.local/share/linx.log')
 command = os.path.basename(sys.argv[0])
 
-__version__ = "1.0"
+__version__ = "1.0.1"
 user_agent = "linxpy/{}".format(__version__)
 upload_path = 'https://linx.li/upload/public/'
 
