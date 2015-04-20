@@ -12,6 +12,7 @@ setup(
         ],
     },
     install_requires=["argparse", "requests>=2.4"],
+    description="A Python client for linx.li.",
     license="WTFPL",
     author="mutantmonkey",
     author_email="linxpy@mutantmonkey.in",

@@ -1,6 +1,6 @@
 # linxpy
 
-A Python client for uploading to [linx.li](https://linx.li).
+A Python client for [linx.li](https://linx.li).
 
 ## Installation
 1. `git clone https://github.com/mutantmonkey/linxpy.git`

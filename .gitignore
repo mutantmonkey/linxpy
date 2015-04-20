@@ -6,4 +6,5 @@
 .DS_Store
 __pycache__/
 build/
+dist/
 linxpy.egg-info/
