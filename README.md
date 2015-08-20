@@ -4,7 +4,8 @@ A Python client for [linx.li](https://linx.li).
 
 ## Installation
 1. `git clone https://github.com/mutantmonkey/linxpy.git`
-2. `python setup.py install`
+2. `cd linxpy`
+3. `python setup.py install`
 
 ## Usage
 
