@@ -1,5 +1,7 @@
 # linxpy
 
+*Note: This software has been superseded by [golinx](https://github.com/mutantmonkey/golinx) and is here for historical purposes only. Do not expect it to work.*
+
 A Python client for [linx.li](https://linx.li).
 
 ## Installation
